@@ -1,0 +1,51 @@
+<div *ngIf="!topic">Invalid topic</div>
+<ng-container *ngIf="topic">
+    <app-secondary-region header="{{ (topic | async)?.title }}">
+        <div class="py-3 text-center">
+            <h1 class="fancy-font">{{ (topic | async)?.title }}</h1>
+            <blockquote class="fancy-font">
+                {{ (topic | async)?.description }}
+            </blockquote>
+        </div>
+        <div
+            *ngIf="
+                (topic | async)?.words && ((topic | async)?.words)!.length > 0
+            "
+            class="text-center mt-4"
+        >
+            <a
+                [routerLink]="['/play/', (topic | async)?.id]"
+                class="btn btn-primary rounded-pill w-50"
+                >Take the quiz</a
+            ><br />
+        </div>
+        <div class="text-center mt-2 pb-5 mb-5">
+            <a
+                [routerLink]="['/topics/']"
+                class="btn rounded-pill btn-secondary w-50"
+                >Change topic</a
+            >
+        </div>
+        <div class="word-bank fancy-font pb-4">
+            <h5 class="text-center fw-bold mb-0">Word bank</h5>
+            <div class="text-center">
+                <small>{{ (topic | async)?.title }}</small>
+            </div>
+            <div
+                *ngFor="let word of (topic | async)?.words"
+                class="row justify-content-md-center my-0"
+            >
+                <div class="row gx-0 py-0">
+                    <div class="col-6 text-end">
+                        {{ word.original }}
+                        <span class="text-muted">..........</span>
+                    </div>
+                    <div class="col-6 text-left">
+                        <span class="text-muted">..........</span>
+                        {{ word.translation }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-secondary-region>
+</ng-container>

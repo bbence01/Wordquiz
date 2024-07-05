@@ -1,0 +1,91 @@
+@use "variables";
+$secondary-background: #b3bedd;
+$secondary-font-color: black;
+$accent-color: #9684ff;
+
+.logo-word {
+    font-family: "Tilt Warp", cursive;
+}
+
+.heavy-font {
+    font-family: "Tilt Warp", cursive;
+}
+
+.logo-quiz {
+    font-family: "Lora", serif;
+}
+
+.fancy-font {
+    font-family: "Lora", serif;
+}
+
+.secondary-font {
+    font-family: "Saira Condensed", sans-serif;
+    word-spacing: 110%;
+    letter-spacing: 0.1rem;
+}
+
+/* Bootstrap overrides */
+$body-bg: variables.$body-bg;
+$body-color: variables.$body-color;
+$primary: variables.$primary;
+$secondary: variables.$secondary;
+
+/* Buttons */
+$btn-border-radius: 0px;
+$btn-border-radius-sm: 0px;
+$btn-border-radius-lg: 0px;
+$btn-font-family: "Saira Condensed", sans-serif;
+$card-border-radius: 0px;
+$card-bg: variables.$body-bg;
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 800px,
+    xl: 900px,
+    xxl: 1120px,
+);
+
+/* Importing Bootstrap SCSS file. */
+@import "bootstrap/scss/bootstrap";
+
+.btn-outline-primary {
+    color: #fff;
+}
+
+.btn-primary {
+    border: 1px solid black;
+}
+
+.bg-secondary a {
+    color: black;
+}
+
+.btn-primary {
+    background-color: black !important;
+    color: white !important;
+    border: 2px variables.$primary solid !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+.btn-primary:hover {
+    color: variables.$primary !important;
+}
+
+.btn-secondary {
+    border: 2px variables.$body-bg solid !important;
+}
+
+.btn-secondary:hover {
+    border: 2px variables.$primary solid !important;
+}
+
+.btn {
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,122 @@
+<div *ngIf="!topic">Invalid topic</div>
+<div *ngIf="topic" class="fancy-font">
+    <app-secondary-region
+        header="{{
+            topic.title +
+                (gameService.phase == 'playing'
+                    ? ' ' + (activeWord + 1) + '/' + gameService.words.length
+                    : '')
+        }}"
+    >
+        <div class="py-5">
+            <!-- PENDING GAME -->
+            <div *ngIf="gameService.phase == 'pending'">
+                <app-game-start
+                    [topic]="topic"
+                    (startClicked)="onStartClicked()"
+                ></app-game-start>
+            </div>
+
+            <!-- RUNNING GAME -->
+            <div class="py-5 my-5" *ngIf="gameService.phase == 'playing'">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="heavy-font my-2">
+                            Translate the following word
+                        </p>
+                        <p class="h2">{{ gameService.words[activeWord] }}</p>
+                    </div>
+
+                    <div class="col-6">
+                        <label class="heavy-font my-2">
+                            Type your answer here
+                        </label>
+                        <input
+                            id="answer-box"
+                            #guessBox
+                            type="text"
+                            autocomplete="off"
+                            (keydown.enter)="onNextClicked()"
+                            (keydown.control.enter)="onPrevClicked()"
+                            (input)="onGuessKeydown()"
+                            [(ngModel)]="currentGuess"
+                            class="w-100 rounded-pill"
+                        />
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-4 text-start">
+                        <button
+                            [disabled]="activeWord == 0"
+                            class="step-button rounded-pill"
+                            (click)="onPrevClicked()"
+                        >
+                            &lt;
+                        </button>
+                    </div>
+
+                    <div class="heavy-font text-center col-4">
+                        <p class="pb-0 m-0">Time remaining</p>
+                        <p
+                            class="fs-4"
+                            [ngClass]="{
+                                'text-warning': gameService.timeRemaining <= 10,
+                                'text-danger': gameService.timeRemaining <= 5
+                            }"
+                        >
+                            {{ gameService.timeRemaining }}
+                        </p>
+                    </div>
+
+                    <div class="col-4 text-end">
+                        <button
+                            class="step-button rounded-pill"
+                            (click)="onNextClicked()"
+                            [disabled]="
+                                activeWord == gameService.words.length - 1
+                            "
+                        >
+                            &gt;
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <ngb-progressbar
+                        type="primary"
+                        [value]="completionPercentage"
+                    >
+                        <span id="progressbar">
+                            {{ completedWords }}/{{ gameService.words.length }}
+                        </span>
+                    </ngb-progressbar>
+                </div>
+
+                <div class="text-center mt-3 mb-5">
+                    <button
+                        (click)="onSubmitClicked()"
+                        class="rounded-pill btn btn-primary"
+                    >
+                        Submit all guesses
+                    </button>
+                </div>
+            </div>
+
+            <!-- Submitting words -->
+            <div *ngIf="gameService.phase == 'submitting'" class="text-center">
+                <p>Submitting your guesses, please wait</p>
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Submitting words -->
+            <div *ngIf="gameService.phase == 'finished'">
+                <app-game-result
+                    (restartClicked)="onStartClicked()"
+                ></app-game-result>
+            </div>
+        </div>
+    </app-secondary-region>
+</div>

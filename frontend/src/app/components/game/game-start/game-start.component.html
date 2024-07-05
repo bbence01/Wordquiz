@@ -1,0 +1,22 @@
+<div class="text-center">
+    <h2>Play a game</h2>
+    <h4 class="mb-5">{{ topic.title }}</h4>
+
+    <p>
+        Can you guess them all? You will have
+        {{ gameService.maxTimeSeconds }} seconds to guess the words.
+    </p>
+
+    <button
+        class="btn btn-primary rounded-pill w-50"
+        (click)="startClicked.emit()"
+    >
+        START
+    </button>
+</div>
+
+<div class="text-center my-2">
+    <a class="btn btn-secondary w-50 rounded-pill" [routerLink]="['/topics']">
+        Change topic
+    </a>
+</div>
